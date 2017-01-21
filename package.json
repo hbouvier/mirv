@@ -1,0 +1,30 @@
+{
+  "name": "mirv",
+  "version": "0.0.2",
+  "description": "Clustered Web Server",
+  "main": "./lib/index.js",
+  "bin": {
+    "mirv": "./mirv"
+  },
+  "scripts": {
+    "start": "./mirv | bunyan",
+    "test": "NODE_ENV=test istanbul cover -x 'spec/*.js' node_modules/jasmine/bin/jasmine.js spec/*Spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "NODE_ENV=test istanbul cover jasmine -- spec/*Spec.js && open coverage/lcov-report/index.html",
+    "clean": "rm -r ./coverage"
+  },
+  "author": "Henri Bouvier",
+  "license": "ISC",
+  "devDependencies": {
+    "coveralls": "^2.11.15",
+    "istanbul": "^0.4.5",
+    "jasmine": "^2.5.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "bunyan": "^1.8.5",
+    "bunyan-middleware": "^0.6.0",
+    "compression": "^1.6.2",
+    "express": "^4.14.0",
+    "express-toobusy": "0.0.3"
+  }
+}

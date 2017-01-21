@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+'use strict';
+
+const mirv    = require('./lib'),
+      express = require('express'),
+      fs      = require('fs');
+
+function routes(app, config, logger) {
+  const pkg = JSON.parse(fs.readFileSync('package.json'));
+  app.use(express.static('.'));
+  app.get('/health', (req, res) => {
+    res.json({ok:true}).end();
+  });
+  app.get('/version', (req, res) => {
+    res.json({version:pkg.version}).end();
+  });
+}
+
+const do_not_log_routes = ['/health'];
+mirv.supervisor(mirv.rest(routes, do_not_log_routes));
