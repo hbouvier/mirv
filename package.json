@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "./mirv | bunyan",
-    "test": "NODE_ENV=test istanbul cover -x 'spec/*.js' node_modules/jasmine/bin/jasmine.js spec/*Spec.js && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "NODE_ENV=test istanbul cover -x 'spec/*.js' node_modules/jasmine/bin/jasmine.js spec/*Spec.js && [ -z ${COVERALLS_REPO_TOKEN} ] || cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "NODE_ENV=test istanbul cover jasmine -- spec/*Spec.js && open coverage/lcov-report/index.html",
     "clean": "rm -r ./coverage"
   },
