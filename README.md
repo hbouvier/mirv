@@ -21,12 +21,13 @@ npm --save install mirv
 
 const mirv    = require('./lib'),
       express = require('express'),
+      path    = require('path'),
       fs      = require('fs');
 
 function routes(app, config, logger) {
-  const pkg = JSON.parse(fs.readFileSync('package.json'));
-  app.use(express.static('.'));
-  app.get('/health', (req, res) => {
+  const pkg = JSON.parse(fs.readFileSync(`${path.resolve(__dirname)}/package.json`));
+  app.use(express.static(config.routes.ressources_path));
+  app.get('/healthz', (req, res) => {
     res.json({ok:true}).end();
   });
   app.get('/version', (req, res) => {
@@ -34,7 +35,7 @@ function routes(app, config, logger) {
   });
 }
 
-const do_not_log_routes = ['/health'];
-mirv.supervisor(mirv.rest(routes, do_not_log_routes));
+const do_not_log_routes = ['/healthz'];
+mirv.supervisor(mirv.rest(routes, do_not_log_routes), {routes:{ressources_path:process.argv[2] || '.'}});
 ```
 
