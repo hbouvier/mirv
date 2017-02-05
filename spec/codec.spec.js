@@ -3,8 +3,8 @@
 
 const codec = require('../lib/codec');
 
-describe("Codec library", function() {
-  it("expect 'hello 😬' to be hello \ud83d\ude2c", function() {
+describe("Codec library", () => {
+  it("expect 'hello 😬' to be hello \ud83d\ude2c", () => {
     expect(codec.to_unicode('hello 😬')).toBe('hello \\ud83d\\ude2c');
   });
 });

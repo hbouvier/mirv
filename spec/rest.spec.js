@@ -1,6 +1,6 @@
 const mirv = require('../lib');
-describe("rest", function() {
-  it("route is invoked", function() {
+describe("rest", () => {
+  it("route is invoked", () => {
     var invoked = false;
     const routes = (app, config, logger) => {invoked = true;}
     const curriedRoutes = mirv.rest(routes);
