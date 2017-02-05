@@ -6,6 +6,8 @@ const mirv    = require('./lib'),
       path    = require('path'),
       fs      = require('fs');
 
+mirv.semver.engine_satisfies('7.2');
+
 function routes(app, config, logger) {
   const pkg = JSON.parse(fs.readFileSync(`${path.resolve(__dirname)}/package.json`));
   app.use(express.static(config.routes.ressources_path));
