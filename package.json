@@ -1,6 +1,6 @@
 {
   "name": "mirv",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Clustered Web Server",
   "main": "./lib/index.js",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=dev ./mirv | bunyan",
-    "prod" : "./mirv",
+    "prod": "./mirv",
     "test": "NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && [ -z ${COVERALLS_REPO_TOKEN} ] || cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && open coverage/lcov-report/index.html",
     "clean": "rm -r ./coverage"
@@ -21,6 +21,7 @@
     "jasmine": "^2.5.3"
   },
   "dependencies": {
+    "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.16.0",
     "bunyan": "^1.8.5",
     "bunyan-middleware": "^0.6.0",
@@ -28,6 +29,8 @@
     "express": "^4.14.0",
     "express-toobusy": "0.0.3"
   },
-  "engines" : { "node" : ">=7.2.0" },
-  "engineStrict" : true
+  "engines": {
+    "node": ">=7.2.0"
+  },
+  "engineStrict": true
 }
