@@ -1,3 +1,6 @@
+/* eslint no-console: 0 */
+'use strict';
+
 const mirv = require('../lib');
 describe("rest", () => {
   it("route is invoked", () => {
