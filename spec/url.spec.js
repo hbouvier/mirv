@@ -27,4 +27,14 @@ describe("URL library", () => {
   it("expect httpz://host:8443/path to be invalid (e.g. httpZ)", () => {
     expect(()=>url.parse('httpz://host:8443/path')).toThrowError(/INVALID URL FORMAT/);
   });
+
+  it("expect http://couchdb-0.couchdb.default.svc.cluster.local:5984/_node/couchdb@couchdb-0.couchdb.default.svc.cluster.local/_config/admins/admin", () => {
+    const parts = url.parse('http://couchdb-0.couchdb.default.svc.cluster.local:5984/_node/couchdb@couchdb-0.couchdb.default.svc.cluster.local/_config/admins/admin');
+    expect(parts.protocol).toBe('http');
+    expect(parts.port).toBe(5984);
+    expect(parts.path).toBe('/_node/couchdb@couchdb-0.couchdb.default.svc.cluster.local/_config/admins/admin');
+  });
+
 });
+
+
