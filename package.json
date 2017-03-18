@@ -1,6 +1,6 @@
 {
   "name": "mirv",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Clustered Web Server",
   "main": "./lib/index.js",
   "bin": {
@@ -27,7 +27,8 @@
     "bunyan-middleware": "^0.6.0",
     "compression": "^1.6.2",
     "express": "^4.14.0",
-    "express-toobusy": "0.0.3"
+    "express-toobusy": "0.0.3",
+    "socket.io": "^1.7.3"
   },
   "engines": {
     "node": ">=7.2.0"
