@@ -1,3 +1,9 @@
+/src/
 /.git/
 /node_modules/
 /coverage/
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+.travis.yml
