@@ -1,5 +1,5 @@
 import createApplication from 'express';
-import * as mirv from './lib';
+import * as mirv from 'mirv';
 
 function application({ app, config, logger }) {
   app.get('/healthz', (req, res) => {

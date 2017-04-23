@@ -9,7 +9,7 @@ import socketIO from 'socket.io';
 import bunyan from 'bunyan-middleware';
 import compression from 'compression';
 import tooBusy from 'express-toobusy';
-import * as mirv from './lib';
+import * as mirv from 'mirv';
 
 mirv.engineSatisfies('7.2');
 

@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as http from 'http';
 import socketIO from 'socket.io';
-import * as mirv from './lib';
+import * as mirv from 'mirv';
 
 
 mirv.engineSatisfies('7.2');

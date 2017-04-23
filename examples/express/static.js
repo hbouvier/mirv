@@ -2,7 +2,7 @@
 import * as express from 'express';
 import createApplication from 'express';
 import * as bodyParser from 'body-parser';
-import * as mirv from './lib';
+import * as mirv from 'mirv';
 
 mirv.engineSatisfies('7.2');
 

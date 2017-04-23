@@ -7,7 +7,7 @@ import * as os from 'os';
 import restifyBunyanLogger from 'restify-bunyan-logger';
 import * as path from 'path';
 import * as fs from 'fs';
-import * as mirv from './lib';
+import * as mirv from 'mirv';
 
 mirv.engineSatisfies('7.2');
 
