@@ -1,11 +1,9 @@
-/* eslint no-console: 0 */
-'use strict';
-const { engine_satisfies, satisfies } = require('../lib/semver');
+/* eslint no-undef: off */
+import { engineSatisfies, satisfies } from '../lib/semver';
 
 describe('Sementic Versionning', () => {
-
   it('nodejs engine must satisfy version greater than 7.x.x', () => {
-    expect(() => engine_satisfies('7')).not.toThrowError(/allo/);
+    expect(() => engineSatisfies('7')).not.toThrowError(/allo/);
   });
 
   it('version 7.0.1 satisfies 7', () => {

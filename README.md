@@ -39,3 +39,9 @@ const do_not_log_routes = ['/healthz'];
 mirv.supervisor(mirv.rest(routes, do_not_log_routes), {routes:{ressources_path:process.argv[2] || '.'}});
 ```
 
+## SBT3
+
+```bash
+CMD-SHIFT-P install => SublimeLinter-contrib-eslint
+CMD-SHIFT-P install => linter-jshint
+```

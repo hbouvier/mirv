@@ -1,24 +1,38 @@
 {
   "name": "mirv",
-  "version": "0.0.9",
+  "version": "0.1.1",
   "description": "Clustered Web Server",
-  "main": "./lib/index.js",
+  "main": "./dist/lib/index.js",
   "bin": {
-    "mirv": "./mirv"
+    "mirv": "./dist/mirv.js"
   },
   "scripts": {
-    "start": "NODE_ENV=dev ./mirv | bunyan",
-    "prod": "./mirv",
-    "test": "NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && [ -z ${COVERALLS_REPO_TOKEN} ] || cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "coverage": "NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && open coverage/lcov-report/index.html",
-    "clean": "rm -r ./coverage"
+    "start": "cd dist && NODE_ENV=dev node ./mirv.js | bunyan",
+    "prod": "cd dist && ./mirv",
+    "prepublish": "yarn run eslint ./src/ && yarn run test && yarn run build",
+    "build": "babel src/ -d dist/ && cp package.json dist/",
+    "test": "cd dist && (NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && [ -z ${COVERALLS_REPO_TOKEN} ] || cat ./coverage/lcov.info | ../node_modules/coveralls/bin/coveralls.js)",
+    "dev-test": "cd dist && (NODE_ENV=test jasmine spec/*.spec.js)",
+    "coverage": "cd dist && (NODE_ENV=test istanbul cover -x 'spec/*.spec.js' jasmine -- spec/*.spec.js && open ./coverage/lcov-report/index.html)",
+    "clean": "rm -r ./dist",
+    "mega-clean": "rm -r ./node_modules ./dist",
+    "publish-beta": "npm publish --tag beta"
   },
   "author": "Henri Bouvier",
   "license": "ISC",
   "devDependencies": {
-    "coveralls": "^2.11.15",
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.2",
+    "babel-preset-env": "^1.4.0",
+    "coveralls": "^2.13.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "istanbul": "^0.4.5",
-    "jasmine": "^2.5.3"
+    "jasmine": "^2.5.3",
+    "lint": "^1.1.2"
   },
   "dependencies": {
     "basic-auth-connect": "^1.0.0",
@@ -28,10 +42,21 @@
     "compression": "^1.6.2",
     "express": "^4.14.0",
     "express-toobusy": "0.0.3",
+    "restify": "^4.3.0",
+    "restify-bunyan-logger": "^2.0.7",
     "socket.io": "^1.7.3"
   },
   "engines": {
     "node": ">=7.2.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
   },
   "engineStrict": true
 }
