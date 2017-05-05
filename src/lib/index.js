@@ -9,3 +9,4 @@ export * from './semver';
 export * from './proxy';
 export * from './promises';
 export * from './server';
+export * from './stats';

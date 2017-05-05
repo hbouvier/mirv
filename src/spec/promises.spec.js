@@ -3,31 +3,6 @@ import * as promises from '../lib/promises';
 import * as instance from '../lib/instance';
 
 describe('promises', () => {
-  it('json of a valid string to resolve', (done) => {
-    const object = { key:'value' };
-    promises.json(JSON.stringify(object))
-      .then((obj) => {
-        expect(obj).toEqual(object);
-        done();
-      })
-      .catch((err) => {
-        expect(instance.typeOf(err)).toBe('undefined');
-        done();
-      });
-  });
-
-  it('json of in invalid json to reject', (done) => {
-    promises.json('{asd}')
-      .then((obj) => {
-        expect(obj).not.toEqual(object);
-        done();
-      })
-      .catch((err) => {
-        expect(instance.typeOf(err.message)).not.toBe('undefined');
-        done();
-      });
-  });
-
   function failXtimes(x) {
     let count = 0;
     return () => {

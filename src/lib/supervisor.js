@@ -1,6 +1,7 @@
 import * as os from 'os';
 import cluster from 'cluster';
 import * as bunyan from 'bunyan';
+import debug from 'debug';
 import { range } from './instance';
 import { Strategy } from './strategy';
 
@@ -17,10 +18,25 @@ const defaultConfig = {
 
 export function supervisor({ worker, config }) {
   const configuration = Object.assign({}, defaultConfig, config || {});
-  const logger = bunyan.createLogger({
+  const bunyanLogger = bunyan.createLogger({
     name: configuration.name,
     level: configuration.level,
   });
+
+  const logger = (namespace) => {
+    const debugLevel = debug(`${namespace}`);
+    const info = debug(`${namespace}`);
+    const warn = debug(`${namespace}`);
+    const error = debug(`${namespace}`);
+
+    debugLevel.log = args => bunyanLogger.debug(args);
+    info.log = args => bunyanLogger.info(args);
+    warn.log = args => bunyanLogger.warn(args);
+    error.log = args => bunyanLogger.error(args);
+    return { debug: debugLevel, info, warn, error, bunyanLogger };
+  };
+
+  const log = logger('mirv:supervisor');
 
   function bootstrap(bootstrapConfig) {
     /* istanbul ignore else */
@@ -37,26 +53,26 @@ export function supervisor({ worker, config }) {
   /* istanbul ignore next */
   function supervisorImpl(supervisorConfig) {
     const nbWorkers = supervisorConfig.nbWorkers || nbCPUs;
-    logger.info(`[master] Starting ${nbWorkers} worker thread(s) on ${nbCPUs} available CPU(s).`);
+    log.info(`[master] Starting ${nbWorkers} worker thread(s) on ${nbCPUs} available CPU(s).`);
     range(nbWorkers).forEach(() => cluster.fork());
 
     cluster.on('exit', (child, code, signal) => {
       switch (supervisorConfig.strategy) {
         case Strategy.restart:
-          logger.error(`[master] ${child.process.pid} died (signal: ${signal} >>> restarting in 5 seconds.`);
+          log.error(`[master] ${child.process.pid} died (signal: ${signal} >>> restarting in 5 seconds.`);
           setTimeout(() => cluster.fork(), 5000);
           break;
 
         case Strategy.terminate:
         default:
-          logger.error(`[master] ${child.process.pid} died >>> TERMINATING ALL CHILDREN.`);
+          log.error(`[master] ${child.process.pid} died >>> TERMINATING ALL CHILDREN.`);
           process.exit(-1);
           break;
       }
     });
 
     cluster.on('error', (child, error) => {
-      logger.error(`[master] child: ${child.process.pid} UNHANDLED ERROR >>> error:${error}`);
+      log.error(`[master] child: ${child.process.pid} UNHANDLED ERROR >>> error:${error}`);
     });
   }
 
